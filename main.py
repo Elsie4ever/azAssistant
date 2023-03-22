@@ -68,7 +68,7 @@ def chat_with_open_ai():
 
             # stop the conversation in lowercase
             if prompt.lower() == "stop":
-                print("\033[94mAssistant: \033[0m Conversation ended, see you next time.")
+                print("\033[94mAssistant: \033[0mConversation ended, see you next time.")
                 break
             else:
                 ask_openai(prompt)
