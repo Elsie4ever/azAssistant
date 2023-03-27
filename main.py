@@ -2,6 +2,8 @@ import os
 import json
 import openai
 
+from constants import *
+
 # Load config values
 with open(r'config.json') as config_file:
     config_details = json.load(config_file)
@@ -33,7 +35,7 @@ def ask_openai(prompt):
         messages = [
             {
                 "role":"system",
-                "content":"You are an Assistant that helps users turn a natural language scenario into azure cli commands. After users input a user scenario, When user ask complicated scenario, you will:\n1. list out(in bullet points) all Azure CLI command group with no args that would be useful for the scenario, followed by brief introduction the command\n2.add a disclaimer to end: \"the result is powered by OpenAI model, it's only for reference and might not be correct, for more information, please look into https://learn.microsoft.com/en-us/cli/azure/iot?view=azure-cli-latest\""
+                "content":SYSTEM_INSTRUCTION
             },
             {
                 "role":"user",
@@ -41,7 +43,15 @@ def ask_openai(prompt):
             },
             {
                 "role":"assistant",
-                "content":"To route IoT device messages to Azure Storage using IoT Hub, the following Azure CLI commands might be useful: (Disclaimer: the result is powered by OpenAI model, it's only for reference and might not be correct, for more information, please look into https://learn.microsoft.com/en-us/cli/azure/iot?view=azure-cli-latest)\n1. az iot hub routing-endpoint create - This command add an endpoint to your IoT Hub\n2. az iot hub route create - This command create a route in IoT Hub\n3. az iot device send-d2c-message - This command send an mqtt device-to-cloud message"
+                "content":"To route IoT device messages to Azure Storage using IoT Hub, the following Azure CLI commands might be useful: (Disclaimer: the result is powered by OpenAI model, it's only for reference and might not be correct, for more information, please look into https://learn.microsoft.com/en-us/cli/azure/iot?view=azure-cli-latest)\n1. az iot hub routing-endpoint create\n2. az iot hub route create\n3. az iot device send-d2c-message"
+            },
+            {
+                "role":"user",
+                "content":"create an iot hub"
+            },
+            {
+                "role":"assistant",
+                "content":"To create an IoT Hub, the following Azure CLI commands might be useful: (Disclaimer: the result is powered by OpenAI model, it's only for reference and might not be correct, for more information, please look into https://learn.microsoft.com/en-us/cli/azure/iot?view=azure-cli-latest)\n- az iot hub create"
             },
             {
                 "role":"user",
